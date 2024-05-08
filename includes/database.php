@@ -14,11 +14,17 @@ class DatabaseConnection {
   }
 
   public function connect() {
+    try {
       $this->conn = new mysqli($this->host, $this->username, $this->password, $this->dbname);
-      if ($this->conn->connect_error) {
-          die("Connection failed: " . $this->conn->connect_error);
-          exit();
-      }
+    } catch (Exception $e) {
+      echo 'Caught exception: ',  $e->getMessage(), "\n";
+    }
+    
+      // $this->conn = new mysqli($this->host, $this->username, $this->password, $this->dbname);
+      // if ($this->conn->connect_error) {
+      //     die("Connection failed: " . $this->conn->connect_error);
+      //     exit();
+      // }
   }
 
   public function getUsers($id) {
