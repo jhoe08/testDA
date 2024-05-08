@@ -83,7 +83,7 @@ class User {
 
     public function getFullname($initial=false) {
         if($initial) {
-            return $this->firstname . ' ' . $this->middlename[0] . '. ' . $this->lastname;
+            return $this->firstname . ' ' . $this->middlename . '. ' . $this->lastname;
         }
         return $this->firstname . ' ' . $this->middlename . ' ' . $this->lastname;
     }

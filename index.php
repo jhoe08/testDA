@@ -1,4 +1,4 @@
-<?php  require_once('database.php') ?>
+<?php  require_once('includes/misc.php') ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -38,8 +38,8 @@
                     <img src="/assets/images/avatar7.png" alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
                       <h4><?php echo $user->getFullname(true); ?></h4>
-                      <p class="text-secondary mb-1">Full Stack Developer</p>
-                      <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
+                      <p class="text-secondary mb-1"><?php echo $user->getPosition() .', '. $user->getDepartment();?></p>
+                      <p class="text-muted font-size-sm"><?php echo $user->getAddress() .', '. $user->getCity() .', '.  $user->getProvince(); ?></p>
                       <button class="btn btn-primary">Follow</button>
                       <!-- <button class="btn btn-outline-primary">Message</button> -->
                     </div>
