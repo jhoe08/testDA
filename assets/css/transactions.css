@@ -1,0 +1,10 @@
+/*https://bootdey.com/snippets/view/new-customer-list*/
+.avatar.sm {
+    width: 2.25rem;
+    height: 2.25rem;
+}
+
+.qrcode img {
+    max-width: 100px;
+    margin: 0 auto;
+}

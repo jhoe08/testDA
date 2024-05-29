@@ -1,0 +1,18 @@
+
+.floating-menu-btn {
+	display: block;
+	position: fixed;
+	z-index: 100;
+	top: 50px;
+	right: 35px;
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+
+}
+
+
+	.floating-menu-toggle .bar {
+			width: 22px;
+			margin: 0 0 4px 0;
+		}

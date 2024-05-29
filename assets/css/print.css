@@ -1,0 +1,10 @@
+@media print {
+/*  Transactions  */
+  .transaction-print header {
+    position: relative;
+  }
+  #qrcode  img {
+      max-width: 150px;
+    }
+/*end Transactions*/
+}

@@ -1,0 +1,118 @@
+/*https://bootdey.com/snippets/view/candidate-list-with-skills-rating-and-location*/
+:root {
+	--primary: #fff;
+	--secondary: #000;
+}
+
+.hidden {
+  display: none !important;
+}
+
+body {
+  background-color: var(--primary);
+}
+
+.mr-1 {
+  margin-right: .25rem;
+}
+
+.ml-1 {
+  margin-left: .25rem;
+}
+
+.fullwidth {
+  width: 100%;
+}
+.float-right {
+	float: right;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.display-flex i {
+  margin-right: 10px;
+}
+
+.align-center {
+ align-items: center;  
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left{
+  text-align: left;
+}
+
+.breadcrumb {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  list-style: none;
+  background-color: #e9ecef;
+  border-radius: 0.25rem;
+}
+
+.float-anchor {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/* Transactions */
+.media-body {
+  position: relative;
+}
+
+.media-body .dropdown {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.well strong {
+  float: left;
+  margin-right: 5px;
+}
+
+.container.login {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: relative;
+}
+
+.input-icon input {
+  padding-left: 55px;
+}
+
+.input-icon input + i {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 7px 13px;
+  background: #e1e1e1;
+}
+.input-icon.hasSearchBtn input {
+  padding-right: 130px;
+}
+.input-icon button {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+/*
+span.badge {
+  border: 1px solid #ddd;
+}*/
