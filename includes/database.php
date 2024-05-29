@@ -10,13 +10,12 @@ class DatabaseConnection {
   private $pass;
 
   public function __construct($host, $username, $password, $dbname) {
-      $this->host = $host;
-      $this->username = $username;
-      $this->password = $password;
-      $this->dbname = $dbname;
+    $this->host = $host;
+    $this->username = $username;
+    $this->password = $password;
+    $this->dbname = $dbname;
 
-      date_default_timezone_set('Asia/Manila');
-
+    date_default_timezone_set('Asia/Manila');
   }
 
   public function connect() {
@@ -71,7 +70,6 @@ class DatabaseConnection {
   }
 
   public function postRemarks($user_id, $ref_id, $message) {
-  // public function postRemarks($user_id, $ref_id, $message, $timestamp=date("m/d/Y G:i:s")) { // ERROR: Constant expression contains invalid operations
     $timestamp = date("m/d/Y G:i:s");
 
     $query = (object) array(  
@@ -88,10 +86,6 @@ class DatabaseConnection {
     
     return $result;
   }
-
-  // public function updateRemarks($user_id, $ref_id, $message) {
-
-  // }
 
   public function deleteRemarks($table, $queries) {
     $lastKey = array_key_last((array)$queries);
@@ -223,9 +217,20 @@ class DatabaseConnection {
     return $this->user;
   }
 
+  public function getUsers($id) {
+      $query = "SELECT * FROM users WHERE id = '$id'";
+      $result = $this->conn->query($query);
+      if ($result->num_rows > 0) {
+          return $result->fetch_assoc();
+      } else {
+          return null;
+      }
+  }
+
   public function closeConnection() {
       $this->conn->close();
   }
+
 }
 
 // Initialize the DatabaseConnection
