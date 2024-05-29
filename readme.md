@@ -1,3 +1,13 @@
+05282024
+- Codes are push to the repository
+
+0527204
+- Fixed pagination
+- Added sidebar
+- Added inputs validation on Transactions page
+- Initial radio button on result-views
+
+
 05252024
 - Created new transaction rom
 
