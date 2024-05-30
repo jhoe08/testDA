@@ -5,7 +5,7 @@
 	<!-- <?php include_once('../breadcrumb.php'); ?> -->
 	<div class="content">
 		<?php 
-			if($datas == NULL) {
+			if($datas === NULL) {
 				header('Location: /404.php	');
 		 		exit();
   		}
@@ -25,9 +25,10 @@
 	              	<i class="bi bi-gear-fill"></i>
 	        			</button>
 	              <div class="dropdown-menu dropdown-menu-end" style="">
-	                <a href="#" class="dropdown-item updateBtn" type="button" data-bs-toggle="modal" data-bs-target="#postRemarksModal"><i class="bi bi-pencil-square"></i> Update Transaction</a>
+	                <a href="#" class="dropdown-item updateBtn" type="button"><i class="bi bi-pencil-square"></i> Update Transaction</a>
+	                <a href="#" class="dropdown-item printBtn" type="button"><i class="bi bi-printer"></i> Print Transaction</a>
 	                <hr>
-	                <a id="delete-<?php echo $value['id']; ?>" href="#" class="dropdown-item text-danger deleteBtn" data-id="<?php echo $value['id']; ?>" data-userId="<?php echo $value['user_id']; ?>"><i class="bi bi-trash"></i> Delete Transaction</a>
+	                <a id="delete-<?php echo $id[1]; ?>" href="#" class="dropdown-item text-danger deleteTransactionBtn" data-id="<?php echo $id[1]; ?>">	<i class="bi bi-trash"></i> Delete Transaction</a>
 	              </div>
 	            </div>
 
@@ -54,15 +55,6 @@
 				            	<em class="ml-3 float-right badge rounded-pill text-bg-secondary" style="margin-left: 10px;"><?php echo $data['banner_program']; ?></em>
 				            </p>
 				            <p class="display-flex align-center"><i class="fs-4 bi bi-bank"></i> <?php echo $data['fund_source']; ?></p>
-
-				            <div class="user-button">
-			                <div class="row">
-		                    <div class="col-md-6">
-		                    <button type="button" class="btn btn-print btn-primary btn-sm btn-block" data-href="/transactions/print/?id=<?php echo $id[1]; ?>">
-		                        <i class="bi bi-printer"></i> Print </button>
-		                    </div>
-			                </div>
-				            </div>
 				        </div><!-- /profile-content -->
 					    </div>
 				    </div>
@@ -72,7 +64,9 @@
 			    <div class="panel panel-default">
 				    <div class="panel-heading d-flex  align-items-center">
 				    	<strong>Remarks</strong> 
+				    	<?php if(isset($_SESSION['username'])) { ?>
 				    	<a href="#" class="ms-auto addBtn btn btn-primary btn-sm float-right"  data-bs-toggle="modal" data-bs-target="#postRemarksModal"><i class="bi bi-plus-circle"></i> Add Remarks</a>
+				    	<?php } ?>
 				    </div>
 					    <div class="panel-body">
 					        
@@ -116,6 +110,7 @@
 					                        	<?php } ?>
 
 					                        </small>
+					                        <?php if(isset($_SESSION['username'])) { ?>
 					                        <div class="dropdown float-right">
                                     <button data-bs-toggle="dropdown" href="#" class="btn p-1" aria-expanded="false">
                                     	<i class="bi bi-list"></i>
@@ -126,6 +121,7 @@
 	                                    <a id="delete-<?php echo $value['id']; ?>" href="#" class="dropdown-item text-danger deleteBtn" data-id="<?php echo $value['id']; ?>" data-userId="<?php echo $value['user_id']; ?>"><i class="bi bi-trash"></i> Delete Remarks</a>
                                     </div>
                                   </div>
+                                	<?php } ?>
 					                        <div class="well">
 				                        		<strong>REMARKS: </strong>
 				                        		<div class="msg asd"><?php echo isset($value['message']) ? $value['message'] : "&nbsp;"; ?></div>
@@ -134,11 +130,11 @@
 					                    </div>
 					                </div><!-- feed-element-->
 					                <?php } } ?>
-							
-							<button class="addBtn btn btn-primary btn-block fullwidth" type="button" data-bs-toggle="modal" data-bs-target="#postRemarksModal">
-								<i class="bi bi-plus-circle"></i> Add Remarks
-							</button>
-
+											<?php if(isset($_SESSION['username'])) { ?>
+											<button class="addBtn btn btn-primary btn-block fullwidth" type="button" data-bs-toggle="modal" data-bs-target="#postRemarksModal">
+												<i class="bi bi-plus-circle"></i> Add Remarks
+											</button>
+											<?php } ?>
 					        </div><!-- feed-activity-list -->
 					    </div><!--ibox-content -->
 				    </div>

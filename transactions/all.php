@@ -6,6 +6,7 @@
   $total = $database->countItems('transid');
   // $perPage = 5;
   $totalPages = $total / $perPage;
+  $noofrecords = $total;
   // 01 - 20; 21 - 40; 31 - 60;
   $showPages = (($currentPage - 1) * $perPage + 1) ."-".($perPage * $currentPage); 
 ?>
@@ -13,7 +14,7 @@
     <!-- <?php include_once('../breadcrumb.php'); ?> -->
     <div class="row">
         <?php include_once('../sidebar/main.php'); ?>
-        <div class="col-9 mb-3 mb-lg-5">
+        <div class="col-9 mb-3 mb-lg-8">
             <div class="overflow-hidden card table-nowrap table-card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">All Transactions</h5>
@@ -86,8 +87,10 @@
                                           <i class="bi bi-eye"></i> View Details</a>
                                         <a href="print/?id=<?php echo $data['product_id']; ?>" class="dropdown-item">
                                           <i class="bi bi-printer"></i> Print</a>
-                                        <hr>
-                                        <a href="#!" class="dropdown-item text-danger"><i class="bi bi-trash"></i> Delete Transactions</a>
+                                        <?php if(isset($_SESSION['username'])) { ?>
+                                          <hr>
+                                          <a href="#!" class="dropdown-item text-danger"><i class="bi bi-trash"></i> Delete Transactions</a>
+                                        <?php } ?>
                                     </div>
                                   </div>
                                 </td>
@@ -101,6 +104,11 @@
                   ?>
                   <nav aria-label="Page navigation example" class="text-center">
                     <ul class="pagination">
+                      <li class="page-item">
+                        <a class="page-link" href="?page=<?php echo $previous; ?>" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>
                       <li class="page-item">
                         <a class="page-link" href="?page=<?php echo $previous; ?>" aria-label="Previous">
                           <span aria-hidden="true">&laquo;</span>

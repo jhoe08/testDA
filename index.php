@@ -1,15 +1,12 @@
 <?php 
     include_once('header.php'); 
 
-    $pagesActive = ['transactions', 'employee'];
-    $show =false;
-    foreach ($pagesActive as $key => $value) {
-      if(array_key_exists($value, $pagesActive)) {
-        $show = true;
-      }
+    $activeComponents = ['transactions', 'employee'];
+
+    function showComponents($component, $activeComponents) {
+      return in_array($component, $activeComponents) ? '': 'hidden'; 
     }
 
-    // var_dump($show);
 ?>
 
 <section class="py-6 bg-light-primary">
@@ -22,7 +19,7 @@
         </div>
 
         <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 text-center justify-content-center px-xl-6 aos-init aos-animate" data-aos="fade-up">
-            <div id="transactions" class="col my-3">
+            <div id="transactions" class="col my-3 <?php echo showComponents('transactions', $activeComponents); ?>">
                 <div class="card border-hover-primary hover-scale">
                     <div class="card-body">
                         <a class="float-anchor" href="/transactions"></a>
@@ -46,7 +43,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col my-3">
+            <div class="col my-3 <?php echo showComponents('asd', $activeComponents); ?>">
                 <div class="card border-hover-primary hover-scale">
                     <div class="card-body">
                         <div class="text-primary mb-5">
@@ -63,7 +60,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col my-3">
+            <div class="col my-3 <?php echo showComponents('asd', $activeComponents); ?>">
                 <div class="card border-hover-primary hover-scale">
                     <div class="card-body">
                         <div class="text-primary mb-5">
@@ -81,7 +78,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col my-3">
+            <div class="col my-3 <?php echo showComponents('asd', $activeComponents); ?>">
                 <div class="card border-hover-primary hover-scale">
                     <div class="card-body">
                         <div class="text-primary mb-5">
@@ -98,7 +95,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col my-3">
+            <div class="col my-3 <?php echo showComponents('asd', $activeComponents); ?>">
                 <div class="card border-hover-primary hover-scale">
                     <div class="card-body">
                         <div class="text-primary mb-5">
@@ -116,7 +113,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col my-3">
+            <div class="col my-3 <?php echo showComponents('asd', $activeComponents); ?>">
                 <div class="card border-hover-primary hover-scale">
                     <div class="card-body">
                         <div class="text-primary mb-5">
@@ -137,7 +134,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col my-3">
+            <div class="col my-3 <?php echo showComponents('asd', $activeComponents); ?>">
                 <div class="card border-hover-primary hover-scale">
                     <div class="card-body">
                         <div class="text-primary mb-5">
@@ -154,7 +151,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col my-3">
+            <div class="col my-3 <?php echo showComponents('asd', $activeComponents); ?>">
                 <div class="card border-hover-primary hover-scale">
                     <div class="card-body">
                         <div class="text-primary mb-5">
@@ -171,7 +168,7 @@
                     </div>
                 </div>
             </div>
-            <div id="employee" class="col mb-0 mt-3 mb-lg-3">
+            <div id="employee" class="col mb-0 mt-3 mb-lg-3 <?php echo showComponents('employee', $activeComponents); ?>">
                 <div class="card border-hover-primary hover-scale">
                     <div class="card-body">
                         <a class="float-anchor" href="/employee"></a>

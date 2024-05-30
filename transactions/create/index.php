@@ -1,5 +1,6 @@
 <?php include_once('../../header.php'); ?>
-<div class="container mt-3">
+<?php if(!isset($_SESSION['username'])) { header('Location: /transactions'); }?>
+<div class="container pt-3">
 
   <div class="row">
 
@@ -169,4 +170,8 @@
 </div>
 
 <script type="text/javascript" src="/assets/js/transactions.js"></script>
-<?php include_once('../../footer.php'); ?>
+
+<?php 
+  include_once('../../modal/transaction-register.php');
+  include_once('../../footer.php'); 
+?>

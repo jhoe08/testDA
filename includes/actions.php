@@ -46,6 +46,9 @@ switch ($function) {
     $result = $database->pagination($table, $offset, $perPage);
     break;
 
+
+  
+
   default:
     $database->closeConnection();
     break;

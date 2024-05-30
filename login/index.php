@@ -1,16 +1,8 @@
 <?php 
-    include_once('../header.php'); 
+  include_once('../header.php'); 
 
-    if ( ! session_id() ) @ session_start();
-
+  if(isset($_SESSION['username'])) { header('Location: /'); }
 ?>
-<!-- 
- <form id="save" action="save.php" method="post">
-          <div class="mb-3">
-            <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text" name="posts"></textarea>
-          </div>
-        </form> -->
 <div class="container login">
     <div class="row justify-content-center">
       <div class="col-md-8">
@@ -19,20 +11,21 @@
             <div class="card-body">
               <h1>Login</h1>
               <p class="text-muted">Sign In to your account</p>
-              <form id="save" action="/includes/login.php" method="post">
+              <form id="login" class="needs-validation" action="/includes/login.php" method="post">
                 <div class="input-group mb-3">
                   <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                  <input type="text" class="form-control" placeholder="Username" id="username" name="username">
+                  <input type="text" class="form-control" placeholder="Username" id="username" name="username" required>
                 </div>
                 <div class="input-group mb-4">
                   <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                  <input type="password" class="form-control" placeholder="Password" id="password" name="password">
+                  <input type="password" class="form-control" placeholder="Password" id="password" name="password" required>
                 </div>
+                <div class="invalid-feedback">Please select a valid state.</div>
                 <div class="row">
                   <div class="col-6">
                     <input type="submit" class="btn btn-primary px-4" id="loginBtn" name="loginBtn" value="Login">
                   </div>
-                  <div class="col-6 text-right">
+                  <div class="col-6 text-right hidden">
                     <button type="button" class="btn btn-link px-0" id="forgotPassBtn">Forgot password?</button>
                   </div>
                 </div>

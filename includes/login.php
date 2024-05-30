@@ -13,7 +13,7 @@ if(isset($_POST['loginBtn'])) {
 
   $results = $database->login($queries);
 
-  // print_r($results);
+  print_r($results);
 
   if($results) {
     if(count($results) >= 1) {
@@ -31,9 +31,8 @@ if(isset($_POST['loginBtn'])) {
         "email" => $results['email'],
       );
 
-
       $_SESSION['username'] = $results['username'];
-
+      $_SESSION['userdata'] = $results;
     } 
   } else {
     header('Location: /login');

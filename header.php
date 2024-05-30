@@ -4,9 +4,13 @@
 
 	session_start();
 
-	global $username;
+	global $username, $noofrecords;
 
-	$username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Walang Kayo';
+	$username = isset($_SESSION['username']) ? $_SESSION['username'] : 'User not found!';
+	$userprofile = isset($_SESSION['username']) ? 'avatar1.png' : 'logo.png';
+	$usercreated = isset($_SESSION['usercreated']) ? $_SESSION['usercreated'] : 'June 23, 1898'; 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -20,5 +24,9 @@
   <link href="/assets/css/index.css" rel="stylesheet">
   <script src="/assets/js/header.js" type="text/javascript"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <link rel="stylesheet" href="/assets/css/users.css">
 </head>
 <body>
+
+

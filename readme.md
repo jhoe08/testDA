@@ -1,3 +1,8 @@
+05292024
+- Deleted transactions search page
+- Offcanvas for the Search page
+- Added off-ground restrictions on the code for deleting the remarks
+
 05282024
 - Codes are push to the repository
 
