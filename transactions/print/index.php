@@ -45,12 +45,6 @@
 	      <th scope="col" class="text-center">Regiementary Period</th>
 	      <th scope="col" class="text-center">
 	      	Date
-	      	<table class="fullwidth">
-	      		<tr class="text-center">
-	      			<th>IN</th>
-	      			<th>OUT</th>
-	      		</tr>
-	      	</table>
 	      </th>
 	      <th scope="col" class="text-center" width="300">Remarks</th>
 	    </tr>
@@ -64,7 +58,15 @@
 	      <td><?php echo $value['user_id']; ?></td>
 	      <!-- <td class="hide"></td> -->
 	      <td></td>
-	      <td><?php echo $value['timestamp']; ?></td>
+	      <td class="text-center">
+	      	<?php echo date('F j, Y, g:i a',strtotime($value['timestamp'])); ?>
+	      	—
+	      	<?php if($key%2==0) { ?>
+	      	<span class="badge text-bg-warning">In</span>
+	      	<?php } else { ?>
+	      	<span class="badge text-bg-info">Out</span>
+	      	<?php } ?>
+	     	</td>
 	      <td><?php echo $value['message']; ?></td>
 	    </tr>
 	    <?php } } ?>

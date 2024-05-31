@@ -6,6 +6,8 @@
   let inputTransId = document.querySelector('#addTransactionsId');
   let itemsRegistered = document.querySelector('#itemListRegistered')
   let registerTransaction = document.querySelector('#registerTransaction')
+  let searchTransaction = document.querySelector('#searchTransaction')
+  let deleteTransaction = document.querySelectorAll('.deleteTransaction')
   let addTransactionsRemarks = document.querySelector('#addTransactionsRemarks')
   let automateRemarks = document.querySelector('#automateRemarks')
   let createTransaction = document.querySelector('#createTransaction')
@@ -47,6 +49,7 @@
           if(ids) {
               // listTransId.push(parseInt(inputTransId.value))
               listTransId.push(ids[1] ? ids[1]: parseInt(inputTransId.value))
+              itemsRegistered.setAttribute('data-searchids', JSON.stringify(listTransId))
               itemsRegistered.innerHTML = '' 
               listTransId.forEach(id=>{
                   itemsRegistered.innerHTML += '<span class="badge text-bg-light fs-6 mr-1">'+id+'</span>';
@@ -82,6 +85,13 @@
       .then(data => {
         console.log('transactions.js' + data)
       });
+    })
+  }
+
+  if (searchTransaction) {
+    searchTransaction.addEventListener('click', function(){
+      let ids = document.querySelector('[data-searchids]')
+      console.log(ids)
     })
   }
 
@@ -168,6 +178,48 @@
             }, 3000)
           }
       });
+    })
+  }
+
+  if (deleteTransaction) {
+    deleteTransaction.forEach(item => {
+      let id = item.getAttribute('data-id')
+      item.addEventListener('click', function(){
+        let transactionDeleteModal = document.querySelector('#transactionDeleteModal')
+        transactionDeleteModal.setAttribute('data-id', id)
+
+        let yesBtn = document.querySelector('#yesbtn')
+        if(yesBtn) {
+          yesBtn.addEventListener('click', function(event){
+            let id = this.closest('.modal.show')
+            id = id.getAttribute('data-id')   
+            // console.log(id)
+
+            let parameters = {
+              product_id : id
+            }
+
+            fetch("/includes/actions.php", {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                  function: 'deleteTransaction',
+                  parameters,
+              })
+            })
+            .then(response => {
+              changeTextAnimate(this, "Deleting...", "Successfully Deleted")
+              return response.json()
+            })
+            .then(data => {
+              
+              console.log(data)
+            });
+          })
+        }
+      })
     })
   }
 

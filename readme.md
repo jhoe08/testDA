@@ -1,3 +1,11 @@
+05302024
+- Automate logout when the browser is closed
+- Created a function to delete a transactions
+- Fixed Delete Transaction button
+- Pampered fixed on the Print page
+- Create a user/employee access page
+- Completed the All page of User/Employee access page
+
 05292024
 - Deleted transactions search page
 - Offcanvas for the Search page

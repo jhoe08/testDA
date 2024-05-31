@@ -18,6 +18,12 @@ switch ($function) {
     $queries = $params;
     $result = $database->saveData('transid', $queries);
     break;
+
+  case 'deleteTransaction':
+    $queries = $params;
+    $result = $database->deleteData('transid', $queries);
+    break; 
+    
   case 'viewAllTrans':
     $result = $database->getData2('transid', NULL, NULL);
     break;
@@ -45,9 +51,6 @@ switch ($function) {
 
     $result = $database->pagination($table, $offset, $perPage);
     break;
-
-
-  
 
   default:
     $database->closeConnection();

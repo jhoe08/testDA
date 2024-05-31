@@ -15,6 +15,9 @@
 	let titleHeader = document.querySelector('#postRemarksModalLabel')
 	let resultViews = document.querySelector('.result-views');
 
+	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
 	if (printBtn) {
 		printBtn.addEventListener('click', function() {
 			let href = this.dataset.href;

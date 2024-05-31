@@ -17,15 +17,15 @@
         <div class="col-9 mb-3 mb-lg-8">
             <div class="overflow-hidden card table-nowrap table-card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">All Transactions</h5>
-                    <div class="records">Showing: <b><?php echo $showPages; ?></b> of <b><?php echo $total; ?></b> result</div>
-                    <div class="result-views">
-                      <button type="button" class="btn btn-soft-base btn-icon active">
-                          <i class="bi bi-list-ul"></i>
-                      </button>
-                      <button type="button" class="btn btn-soft-base btn-icon">
-                          <i class="bi bi-grid"></i>
-                      </button>
+                  <h5 class="mb-0">All Transactions</h5>
+                  <div class="records">Showing: <b><?php echo $showPages; ?></b> of <b><?php echo $total; ?></b> result</div>
+                  <div class="result-views">
+                    <button type="button" class="btn btn-soft-base btn-icon active">
+                        <i class="bi bi-list-ul"></i>
+                    </button>
+                    <button type="button" class="btn btn-soft-base btn-icon">
+                        <i class="bi bi-grid"></i>
+                    </button>
                   </div>
                 </div>
                 <div class="table-responsive">
@@ -89,7 +89,7 @@
                                           <i class="bi bi-printer"></i> Print</a>
                                         <?php if(isset($_SESSION['username'])) { ?>
                                           <hr>
-                                          <a href="#!" class="dropdown-item text-danger"><i class="bi bi-trash"></i> Delete Transactions</a>
+                                          <a data-id="<?php echo $data['product_id']; ?>" type="button" href="#!" class="deleteTransaction dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#transactionDeleteModal"><i class="bi bi-trash"></i> Delete Transactions</a>
                                         <?php } ?>
                                     </div>
                                   </div>
@@ -130,7 +130,7 @@
     </div>
 </div>
 
-
+<?php include_once('../modal/transaction-delete.php'); ?>
 
 <script type="text/javascript" src="/assets/js/transactions.js"></script>
 <script type="text/javascript" src="/assets/js/pagination.js"></script>

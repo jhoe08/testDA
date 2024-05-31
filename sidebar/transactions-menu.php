@@ -9,7 +9,7 @@
     </a>
     <?php if(isset($_SESSION['username'])) { ?>
     <a class="list-group-item" href="/transactions/create">
-        <i class="bi bi-file-earmark-plus"></i> Create Transactions
+        <i class="bi bi-file-earmark-plus text-success"></i> Create Transactions
     </a>
     <a class="list-group-item" href="#" type="button" data-bs-toggle="modal" data-bs-target="#registerTransactionsModal">
         <i class="bi bi-qr-code-scan"></i> Register Transactions
@@ -34,7 +34,7 @@
     </div>
     <div class="modal-footer hstack gap-3">
         <button type="button" class="btn " data-bs-dismiss="offcanvas" aria-label="Close">Close</button>
-        <button type="button" class="btn btn-primary" name="registerTransaction" id="registerTransaction" data-refid="">Search Transactions</button>
+        <button type="button" class="btn btn-primary" name="searchTransaction" id="searchTransaction" data-refid="">Search Transactions</button>
       </div>
   </div>
 </div>

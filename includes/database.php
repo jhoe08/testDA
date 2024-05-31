@@ -138,7 +138,7 @@ class DatabaseConnection {
     return $message;
   }
 
-  public function getData($table, $queries) {
+  public function TEST_getData($table, $queries) {
     if(!$table) return;
 
     $lastKey = array_key_last((array)$queries);
@@ -155,6 +155,31 @@ class DatabaseConnection {
     }
 
     // print_r($query);
+  }
+
+  public function deleteData($table, $queries) {
+    if(!$table && !$id) return;
+
+    $lastKey = array_key_last((array)$queries);
+
+    $query = "DELETE FROM `{$table}` WHERE ";
+
+    foreach ($queries as $key => $value) {
+      $query .= "{$key}={$value} ";
+      if($key !== $lastKey) {
+        $query .= "AND ";
+      }
+    }
+    $query .= ';';
+
+    $result = $this->conn->query($query);
+    $message = [
+      'status' => $result ? 200 : 501,
+      'message' => $result ? "Succesfully saved" : "Failed to save!", 
+      'data' => $queries
+    ];
+
+    return $message;
   }
 
   public function countItems($table, $field=NULL, $conditions=NULL) {
@@ -202,7 +227,7 @@ class DatabaseConnection {
 
     return ($result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASSOC) : NULL;
   }
-
+  // USERS/EMPLOYEES
   public function login($queries) {
     if(!$this->getUser($queries)) return;
     $result = $this->getUser($queries);
@@ -217,20 +242,15 @@ class DatabaseConnection {
     return $this->user;
   }
 
-  public function getUsers($id) {
-      $query = "SELECT * FROM users WHERE id = '$id'";
-      $result = $this->conn->query($query);
-      if ($result->num_rows > 0) {
-          return $result->fetch_assoc();
-      } else {
-          return null;
-      }
+  public function getUsers($queries=NULL, $functions=NULL) {
+    return $this->getData2('register', ($queries) ? $queries : NULL, $functions);
   }
 
+  // TERMINATE DATABASE CONNECTION
   public function closeConnection() {
       $this->conn->close();
   }
-
+  // ENDOF USERS/EMPLOYEES
 }
 
 // Initialize the DatabaseConnection

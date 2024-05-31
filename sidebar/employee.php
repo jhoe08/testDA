@@ -1,6 +1,6 @@
 <div class="overflow-hidden card table-nowrap table-card">
     <aside class="user-info-wrapper pb-1">
-        <div class="user-cover" style="background-image: url(https://bootdey.com/img/Content/bg1.jpg);">
+        <div class="user-cover" style="background-image: url(/assets/images/bg1.jpg);">
             <div class="info-label" data-toggle="tooltip" title="" data-original-title="You currently have 290 Reward Points to spend">
                 <i class="icon-medal"></i> 290 points
             </div>
@@ -21,7 +21,6 @@
         </div>
     </aside>
 </div>
-
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasLoginRight" aria-labelledby="offcanvasLoginRightLabel">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title" id="offcanvasLoginRightLabel">Login</h5>

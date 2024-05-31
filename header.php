@@ -1,7 +1,9 @@
 <?php 
 	require_once('includes/const.php');
-	require_once('includes/database.php'); 
+	require_once('includes/database.php');
+	require_once('includes/misc.php'); 
 
+	session_set_cookie_params(0);
 	session_start();
 
 	global $username, $noofrecords;
