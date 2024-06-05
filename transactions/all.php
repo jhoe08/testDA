@@ -1,11 +1,11 @@
 <link rel="stylesheet" href="/assets/css/transactions.css">
-<link rel="stylesheet" href="/assets/css/pagination.css">
+
 <?php
   $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
 
   $total = $database->countItems('transid');
   // $perPage = 5;
-  $totalPages = $total / $perPage;
+  $totalPages = ceil( $total / $perPage );
   $noofrecords = $total;
   // 01 - 20; 21 - 40; 31 - 60;
   $showPages = (($currentPage - 1) * $perPage + 1) ."-".($perPage * $currentPage); 
@@ -67,7 +67,7 @@
 
                                   </div>
                                 </td>
-                                <td><span><?php echo '₱'.$budget; ?></span></td>
+                                <td><span class="pr_budget"><?php echo '₱'.gettype($budget)=='integer' ? number_format($budget) : $budget; ?></span></td>
                                 <td>
                                   <?php echo date('M j, Y', strtotime($data['pr_date'])); ?>
                                   <?php 
@@ -79,17 +79,20 @@
                                 </td>
                                 <td class="text-center">
                                   <div class="dropdown">
-                                    <a data-bs-toggle="dropdown" href="#" class="btn p-1" aria-expanded="false">
+                                    <a data-bs-toggle="dropdown" href="#" class="btn" aria-expanded="false">
                                       <i class="bi bi-list"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end" style="">
                                         <a href="?id=<?php echo $data['product_id']; ?>" class="dropdown-item">
                                           <i class="bi bi-eye"></i> View Details</a>
+                                        <a href="create?id=<?php echo $data['product_id']; ?>" class="dropdown-item">
+                                          <i class="bi bi-arrow-counterclockwise"></i> Update Details</a>
                                         <a href="print/?id=<?php echo $data['product_id']; ?>" class="dropdown-item">
                                           <i class="bi bi-printer"></i> Print</a>
                                         <?php if(isset($_SESSION['username'])) { ?>
                                           <hr>
-                                          <a data-id="<?php echo $data['product_id']; ?>" type="button" href="#!" class="deleteTransaction dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#transactionDeleteModal"><i class="bi bi-trash"></i> Delete Transactions</a>
+                                          <a data-id="<?php echo $data['product_id']; ?>" type="button" href="#!" class="removeTransaction dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#transactionHideModal"><i class="bi bi-eye-slash-fill"></i> Delete Transactions</a>
+                                          <a data-id="<?php echo $data['product_id']; ?>" type="button" href="#!" class="deleteTransaction hidden dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#transactionDeleteModal"><i class="bi bi-trash"></i> Forced Delete Transactions</a>
                                         <?php } ?>
                                     </div>
                                   </div>
@@ -133,4 +136,4 @@
 <?php include_once('../modal/transaction-delete.php'); ?>
 
 <script type="text/javascript" src="/assets/js/transactions.js"></script>
-<script type="text/javascript" src="/assets/js/pagination.js"></script>
+<!-- <script type="text/javascript" src="/assets/js/pagination.js"></script> -->

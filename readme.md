@@ -1,3 +1,13 @@
+06032024
+- Fixed website error/issues
+- Completed Updated Transaction
+- Added UpdateTransaction function
+
+05312024
+- Added Footer navigation
+- Improve Database connections on Function
+- Created Update Transaction form
+
 05302024
 - Automate logout when the browser is closed
 - Created a function to delete a transactions

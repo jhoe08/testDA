@@ -5,7 +5,7 @@
 
   if (pages) {
     // console.log(pages)?
-    return false; // stop the callback
+    return; // stop the callback
 
     pages.forEach(page => {
       page.addEventListener('click', function(e){

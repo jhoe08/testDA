@@ -11,12 +11,12 @@
 
 <section class="py-6 bg-light-primary">
     <div class="container">
-        <div class="row justify-content-center text-center mb-4">
+        <!-- <div class="row justify-content-center text-center mb-4">
             <div class="col-xl-6 col-lg-8 col-sm-10">
                 <h2 class="font-weight-bold">The Perfect Blend of Features <br>for your Company</h2>
                 <p class="text-muted mb-0">We bring the results while helping you achieve cost and time savings without taking on risk or management overhead.</p>
             </div>
-        </div>
+        </div> -->
 
         <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 text-center justify-content-center px-xl-6 aos-init aos-animate" data-aos="fade-up">
             <div id="transactions" class="col my-3 <?php echo showComponents('transactions', $activeComponents); ?>">
@@ -39,7 +39,7 @@
                             </svg>
                         </div>
                         <h6 class="font-weight-bold mb-3">Transactions</h6>
-                        <p class="text-muted mb-0">Embed holistics charts directly to your application</p>
+                        <p class="text-muted mb-0">Purchase Request, Transaction, Codes</p>
                     </div>
                 </div>
             </div>

@@ -31,6 +31,15 @@ const DEPARTMENT = [
 
 // Purchase Request Classification
 
-const PR_CLASSIFICATION = ['Catering Services','Consumables','Food & Accommodation','Freight & Handling','Goods','Infrastructure','Machineries & Equipment','Motor Vehicle','Repair & Maintenance','Services(JO/COS)','Training','Training & Representation'];
+const PR_CLASSIFICATION = ['Catering Services','Consumables','Food & Accommodation','Freight & Handling','Goods','Infrastructure','Machineries & Equipment','Motor Vehicle','Repair & Maintenance','Services(JO/COS)','Training','Training & Representation', 'Others'];
 
 const BANNER_PROGRAM = ['Corn','GASS','HVCDP','Livestock','NUPAP','Organic','Rice','SAAD','STO'];
+const BAC_UNIT = ['BAC 1', 'BAC 2', 'Others'];
+
+const USERS = [
+  1234 => [
+    'firtname' => 'Joegie',
+    'lastname' => 'Wagwag',
+    'employeeid' => 888
+  ]
+];

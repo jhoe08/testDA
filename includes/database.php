@@ -1,4 +1,5 @@
 <?php
+
 class DatabaseConnection {
   private $host;
   private $username;
@@ -30,7 +31,7 @@ class DatabaseConnection {
     }
   }
 
-  public function getData2($table, $queries=NULL, $functions) {
+  private function getData2($table, $queries=NULL, $functions=NULL) {
     $query = "SELECT * FROM {$table} ";
 
     if($query) {
@@ -38,6 +39,8 @@ class DatabaseConnection {
       if($queries) {
         $lastKey = array_key_last((array)$queries);
         $query .= "WHERE ";
+
+        // print_r($queries);
 
         foreach ($queries as $key => $value) {
           if(count(array($queries)) > 1 && $key === $lastKey) {
@@ -59,7 +62,12 @@ class DatabaseConnection {
       return ($result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASSOC) : NULL;
     }
   }
-  
+  // HISTORY
+  public function removeTransactions($queries) {
+    $result = $this->getData2('history', $queries);
+    return $result ? 'Succesfully removed the data!': 'Failed to remove the data!';
+  }
+  // REMARKS
   public function getRemarks($id) {
     if($id) { $query = (object) array("ref_id"=>$id); }
     
@@ -109,7 +117,7 @@ class DatabaseConnection {
     ];
     echo json_encode($message);
   }
-
+  // ENDOF REMARKS
   public function saveData($table, $queries) {
     if(!$table) return;
 
@@ -138,10 +146,42 @@ class DatabaseConnection {
     return $message;
   }
 
+  private function updateData($table, $queries, $conditions) {
+    // if(!$table || !$queries || $conditions) return;
+
+     $lastKeyQuery = array_key_last((array) $queries);
+     $lastKeyCondition = array_key_last((array) $conditions);
+
+    $query = "UPDATE `{$table}` SET ";
+    foreach ($queries as $key => $value) {
+      $query .= "{$key}='{$value}' ";
+      if($key !== $lastKeyQuery) {
+        $query .= ", ";
+      }
+    }
+    if($conditions) {
+      $query .= "WHERE ";
+      foreach ($conditions as $key => $value) {
+        $query .= "{$key}='{$value}' ";
+        if(count(array($conditions)) > 1 && $key === $lastKeyCondition) {
+          $query .= "AND ";
+        }
+      }
+    }
+    
+    // print_r($query);
+    $result = $this->conn->query($query);
+    $message = [
+      'status' => $result ? 200 : 501,
+      'message' => $result ? "Succesfully updated" : "Failed to update!", 
+    ];
+    return $message;
+  }
+
   public function TEST_getData($table, $queries) {
     if(!$table) return;
 
-    $lastKey = array_key_last((array)$queries);
+    $lastKey = array_key_last((array) $queries);
 
     $query = "SELECT * FROM `register` ";
     if($queries) {
@@ -227,6 +267,20 @@ class DatabaseConnection {
 
     return ($result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASSOC) : NULL;
   }
+  // TRANSACTIONS
+  public function getTransactions($queries=NULL, $conditions=NULL) {
+    return $this->getData2('transid', $queries, $conditions);
+  }
+  public function saveTransactions($queries) {
+    return $this->saveData('transid', $queries);
+  }
+  public function updateTransactions($queries, $conditions) {
+    return $this->updateData('transid', $queries, $conditions);
+  }
+  public function deleteTransactions($queries=NULL) {
+    return $this->deleteData('transid', $queries);
+  }
+  // ENDOF TRANSACTIONS
   // USERS/EMPLOYEES
   public function login($queries) {
     if(!$this->getUser($queries)) return;
@@ -246,11 +300,12 @@ class DatabaseConnection {
     return $this->getData2('register', ($queries) ? $queries : NULL, $functions);
   }
 
+  // ENDOF USERS/EMPLOYEES
+  
   // TERMINATE DATABASE CONNECTION
   public function closeConnection() {
       $this->conn->close();
   }
-  // ENDOF USERS/EMPLOYEES
 }
 
 // Initialize the DatabaseConnection

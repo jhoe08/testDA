@@ -1,4 +1,5 @@
 <?php 
+// header('Location: /');
 
 require_once('database.php');
 session_start();
@@ -16,23 +17,30 @@ if($object->parameters || $object->function) {
 switch ($function) {
   case 'saveTransaction':
     $queries = $params;
-    $result = $database->saveData('transid', $queries);
+    $result = $database->saveTransactions($queries);
     break;
-
+  case 'updateTransaction':
+    $conditions = (object) array("product_id" => $object->id);
+    $result = $database->updateTransactions($params, $conditions);
+    break;
+  case 'removeTransaction':
+    $queries = $params;
+    $result = $database->removeTransactions($queries);
+    break;
   case 'deleteTransaction':
     $queries = $params;
-    $result = $database->deleteData('transid', $queries);
+    $result = $database->deleteTransactions($queries);
     break; 
     
   case 'viewAllTrans':
-    $result = $database->getData2('transid', NULL, NULL);
+    $result = $database->getTransactions();
     break;
   
   case 'registerBatchTrans':
-    $user_id = $username ? $username : '7777777';
+    $user_id = '7777777';
     $message = $object->remarks;
     foreach ($params as $key => $value) {
-      $queries = (object) array("user_id"=>$username,"ref_id"=>$value, "message"=>$message);
+      $queries = (object) array("user_id"=>$user_id,"ref_id"=>$value, "message"=>$message);
       $result = $database->saveData('remarks', $queries );
     }
     break;

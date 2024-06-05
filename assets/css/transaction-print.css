@@ -1,0 +1,38 @@
+#qrcode img {
+  max-width: 120px;
+  margin: auto 0 0 auto;
+}
+
+@media print {
+  body {
+    margin: 2mm 1mm 2mm 1mm;
+    font-size: 12px;
+  }
+  .table.table-striped {
+    border-spacing: 1px;
+  }
+  .table.table-striped th, .table.table-striped td {
+    border-width: 1px;
+  /* padding: .1rem;*/
+  margin: 0;
+  }
+  .transaction-print header {
+    position: relative;
+  }
+  #qrcode  img {
+    max-width: 100px;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  .topHeadLeft {
+    vertical-align: bottom;
+  }
+  .titleHead {
+    vertical-align: top;
+  }
+  nav.nav,
+  .goback {
+    display: none;
+  }
+}

@@ -4,32 +4,35 @@
 	if(isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != "") {
 		$id = $_SERVER['QUERY_STRING'];
 		$id = explode("=", $id);
-		$queries = (object) array('ref_id' => $id[1]);
+		$queries = (object) array('product_id' => $id[1]);
 
-		$datas = $database->getData2('remarks', $queries, NULL);
-
-		// print_r($datas);	
+		$transaction = $database->getTransactions($queries, NULL);
+		$transaction = $transaction[0];
+		$remarks = $database->getRemarks($id[1]);
+		$remarks = ($remarks != null) ? $remarks : 0;
+		// var_dump($remarks);
+		
 	}
 ?>
-<style type="text/css">
-	#qrcode img {
-		max-width: 120px;
-		margin: auto 0 0 auto;
-	}
-</style>
+<link rel="stylesheet" type="text/css" href="/assets/css/transaction-print.css">
+
 <div class="transaction-print container mt-3">
-	<div class="header row text-center">
-		<table>
+	<div><a class="goback text-decoration-none text-secondary fs-6" href="/transactions/"><i class="bi bi-arrow-left-square"></i> Go Back</a></div>
+	<div class="header text-center">
+		<table class="container-fluid">
 			<tbody>
 				<tr>
-					<td class="text-left">
-						<p><strong>Name: </strong></p>
-						<p><strong>PR Classification: </strong></p>
-					</td>
-					<td>
+					<th colspan="3" id="titleHead" class="align-top">
 						<h3>Tracking Sheet / For Compliance</h3>
+					</th>
+				</tr>
+				<tr>
+					<td id="topHeadLeft" class="text-left">
+						<p><strong>Name: </strong><?php echo $transaction['requisitioner']; ?></p>
+						<p><strong>PR Classification: </strong> <?php echo $transaction['pr_classification']; ?></p>
 					</td>
-					<td>
+					
+					<td id="topHeadRight " >
 						<div id="qrcode" style=""></div>
 					</td>
 				</tr>
@@ -39,35 +42,60 @@
 	<table class="table table-striped">
 	  <thead>
 	    <tr>
-	      <th scope="col" class="text-center" width="200">OFFICE/Person Responsible</th>
-	      <th scope="col" width="25">Name</th>
-	      <!-- <th scope="col" width="75"class="hide">Signature</th> -->
-	      <th scope="col" class="text-center">Regiementary Period</th>
-	      <th scope="col" class="text-center">
+	      <th scope="col" class="text-center align-middle" width="300">OFFICE/Person Responsible</th>
+	      <th scope="col" class="text-center align-middle text-uppercase" width="100">Name</th>
+	      <th scope="col" class="text-center align-middle text-uppercase" width="75"class="hide">Signature</th>
+	      <th scope="col" class="text-center align-middle" width="150">Regiementary Period</th>
+	      <th scope="col" class="text-center align-middle text-uppercase" width="350">
 	      	Date
+	      	<div class="row hidden">
+				    <div class="col">IN</div>
+				    <div class="col">OUT</div>
+				  </div>
 	      </th>
-	      <th scope="col" class="text-center" width="300">Remarks</th>
+	      <th scope="col" class="text-center align-middle text-uppercase" width="300">Remarks</th>
 	    </tr>
 	  </thead>
 	  <tbody>
-	  	<?php if (!$datas) { ?><tr><th class="text-center" colspan="6">NO RESULTS</th></tr><?php } ?>
-	  	<?php if ($datas) {
-	  		foreach ($datas as $key => $value) { ?>
-	    <tr>
-	      <th scope="row"><?php echo $value['user_id']; ?></th>
-	      <td><?php echo $value['user_id']; ?></td>
-	      <!-- <td class="hide"></td> -->
+	  	<?php if (!$remarks) { ?><tr><th class="text-center" colspan="6">NO REMARKS</th></tr><?php } ?>
+	  	<?php if ($remarks) {
+	  		$checkIn = [];
+	  		$count = 0;
+
+	  		foreach ($remarks as $key => $value) { $count++; 
+	  			
+	  		?>
+	    <tr data-key="<?php echo $key; ?>">
+	      <td scope="row"><?php echo $count.'. '; ?></td>
+	      <td></td>
+	      <td></td>
 	      <td></td>
 	      <td class="text-center">
-	      	<?php echo date('F j, Y, g:i a',strtotime($value['timestamp'])); ?>
-	      	—
+	      	<small>
+	      	<?php echo date('m/d/Y',strtotime($value['timestamp'])); ?><br>
+	      	<?php echo date('g:i a', strtotime($value['timestamp'])); ?>
+	      	<!-- -
 	      	<?php if($key%2==0) { ?>
-	      	<span class="badge text-bg-warning">In</span>
+	      	<span class="badge text-bg-warning text-uppercase">In</span>
 	      	<?php } else { ?>
-	      	<span class="badge text-bg-info">Out</span>
-	      	<?php } ?>
+	      	<span class="badge text-bg-info text-uppercase">Out</span>
+	      	<?php } ?> -->
+	      	</small>
 	     	</td>
-	      <td><?php echo $value['message']; ?></td>
+	      <td>: <?php echo $value['message']; ?></td>
+	    </tr>
+	    <?php } } ?>
+
+	    <?php if($remarks) { 
+	    	$countRemarks = count($remarks);
+	    	for ($i=$countRemarks; $i <= 30; $i++) { ?>
+    	<tr>
+	    	<td><?php echo $i; ?>.</td>
+	    	<td></td>
+	    	<td></td>
+	    	<td></td>
+	    	<td></td>
+	    	<td></td>
 	    </tr>
 	    <?php } } ?>
 	  </tbody>

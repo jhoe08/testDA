@@ -1,7 +1,26 @@
-<?php include_once('../../header.php'); ?>
-<?php if(!isset($_SESSION['username'])) { header('Location: /transactions'); }?>
-<div class="container pt-3">
+<?php include_once('../../header.php');
+  
+  if(!isset($_SESSION['username'])) { header('Location: /transactions'); }
+  $query = isset($_SERVER['QUERY_STRING']) ? explode('id=', $_SERVER['QUERY_STRING']) : false;
+  $isUpdate = count(array_filter($query));
+  if($isUpdate) {
+    $backLink = '/transactions/?id='.$query[1];
+    $queries = (object) array("product_id" => $query[1]);
+    $data = $database->getTransactions($queries, NULl);
+    $data = $data[0];
 
+    $budget = preg_replace('|[^0-9]|i', '', $data['approved_budget']);
+    $budget = (int) $budget;
+
+    $requisitioner = $data['requisitioner'] ? $data['requisitioner'] : '';
+  } else {
+    $requisitioner = false;
+    $backLink = '/transactions/';
+  }
+?>
+
+<div class="container pt-3">
+  <div class="mb-3"><a class="goback text-decoration-none text-secondary fs-6" href="<?php echo $backLink; ?>"><i class="bi bi-arrow-left-square"></i> Go Back</a></div>
   <div class="row">
 
     <?php include_once('../../sidebar/main.php'); ?>
@@ -14,11 +33,12 @@
           <i class="bi bi-arrow-left-square me-2"></i>
         </a> Create new Transaction</h2>
       <div class="hstack gap-3">
-        <button class="btn btn-light btn-sm btn-icon-text fs-6 hidden"><i class="bi bi-x"></i> <span class="text">Cancel</span></button>
-        <button class="btn btn-secondary btn-sm btn-icon-text fs-6" id="loadPsuedoData"><i class="bi bi-file-text"></i>
- <span class="text">Load Data</span></button>
-        <button type="submit" class="btn btn-primary btn-sm btn-icon-text fs-6" id="createTransaction"><i class="bi bi-file-earmark-plus"></i>
-<span class="text">Create</span></button>
+        <button class="btn btn-light btn-sm btn-icon-text fs-6 hidden">
+          <i class="bi bi-x"></i> <span class="text">Cancel</span></button>
+        <button class="btn btn-secondary btn-sm btn-icon-text fs-6 hidden" id="loadPsuedoData">
+          <i class="bi bi-file-text"></i> <span class="text">Load Data</span></button>
+        <button type="submit" class="btn btn-primary btn-sm btn-icon-text fs-6" id="<?php echo $isUpdate ?'updateTransaction':'createTransaction'; ?>" data-id="<?php echo $query[1];?>">
+          <i class="bi bi-file-earmark-plus"></i> <span class="text"><?php echo $isUpdate ?'Update':'Create' ?></span></button>
       </div>
     </div>
 
@@ -31,13 +51,17 @@
           <div class="card-body">
             <h3 class="h6 mb-4">Requisitioner</h3>
             <div class="row">
-              <div class="col-lg-6">
+              <div class="col-lg-6 hidden">
                 <label class="form-label">First name</label>
                 <input type="text" class="form-control" id="firstname" required>
               </div>
-              <div class="col-lg-6">
+              <div class="col-lg-6 hidden">
                 <label class="form-label">Last name</label>
                 <input type="text" class="form-control" id="lastname" required>
+              </div>
+              <div class="col-lg-12">
+                <label class="form-label">Full name</label>
+                <input type="text" class="form-control" id="fullname" value="<?php echo $requisitioner; ?>" required <?php echo $requisitioner ? 'readonly disabled' :''; ?>>
               </div>
             </div>
           </div>
@@ -48,17 +72,17 @@
             <h3 class="h6 mb-4">Transaction Details</h3>
             <div class="mb-3">
               <label class="form-label">Notice Title</label>
-              <input type="text" class="form-control" id="noticetitle" required>
+              <input value="<?php echo ($isUpdate && $data['bid_notice_title']) ? $data['bid_notice_title']:''; ?>" type="text" class="form-control" id="noticetitle" required>
             </div>
             <div class="mb-3">
               <label class="form-label">Fund Source</label>
-              <input type="text" class="form-control" id="fundsource">
+              <input value="<?php echo ($isUpdate && $data['fund_source']) ? $data['fund_source']:''; ?>" type="text" class="form-control" id="fundsource">
             </div>
             <div class="mb-3">
               <label class="form-label">Approved Budget</label>
               <div class="input-group ">
                 <span class="input-group-text">₱</span>
-                  <input type="number" class="form-control" id="approvedbudget" required>
+                <input data-inputmask="'mask':'xx-xxxxxxx'" value="<?php echo ($isUpdate && $data['approved_budget']) ? $budget:''; ?>" type="number" class="form-control" id="approvedbudget" required>
                 <span class="input-group-text">.00</span>
               </div>
             </div>
@@ -69,9 +93,8 @@
                   <select class="form-select" id="classification" required>
                     <option value="" selected="">Draft</option>
                     <?php foreach (PR_CLASSIFICATION as $key => $value) { ?>
-                      <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+                      <option <?php echo ($isUpdate && $data['pr_classification'] === $value) ? 'selected':''; ?> value="<?php echo $value; ?>"><?php echo $value; ?></option>
                     <?php } ?>
-                    <option value="Others">Others</option>
                   </select>
                 </div>
               </div>
@@ -81,7 +104,7 @@
                   <select class="form-select" id="bannerprogram">
                     <option value="Others">Others</option>
                     <?php foreach (BANNER_PROGRAM as $key => $value) { ?>
-                      <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+                      <option <?php echo ($isUpdate && $data['banner_program'] === $value) ? 'selected':''; ?> value="<?php echo $value; ?>"><?php echo $value; ?></option>
                     <?php } ?>
                   </select>
                 </div>
@@ -102,9 +125,9 @@
               <label class="form-label">BAC</label>
               <select class="form-select" id="bacunit">
                 <option value="draft" selected="">Draft</option>
-                <option value="BAC 1">BAC 1</option>
-                <option value="BAC 2">BAC 2</option>
-                <option value="Others">Others</option>
+                <?php foreach (BAC_UNIT as $key => $value) { ?>
+                  <option <?php echo ($isUpdate && strtoupper($data['bac_unit']) === $value) ? 'selected':''; ?> value="<?php echo $value; ?>"><?php echo $value; ?></option>
+                <?php } ?>
               </select>
             </div>
           </div>
@@ -113,7 +136,7 @@
         <div class="card mb-4">
           <div class="card-body">
             <h3 class="h6">Remarks</h3>
-            <textarea class="form-control" rows="3" id="remarks" required></textarea>
+            <textarea class="form-control" rows="3" id="remarks" required><?php echo ($isUpdate && $data['remarks']) ? $data['remarks']:''; ?></textarea>
           </div>
         </div>
         <!-- Notification settings -->
@@ -122,7 +145,7 @@
             <h3 class="h6 mb-4">Other Details</h3>
             <div class="mb-3">
               <label class="form-label">Codes</label>
-              <input type="text" class="form-control" id="transcode">
+              <input type="text" class="form-control" id="transcode" <?php echo $isUpdate ?'disabled':''; ?> value="<?php echo ($isUpdate && $data['trans_code']) ? $data['trans_code']:''; ?>">
             </div>
           </div>
         </div>

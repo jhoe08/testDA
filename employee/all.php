@@ -3,17 +3,14 @@
 <?php
   $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
   $total = $database->countItems('register');
-  // $perPage = 5;
-  $totalPages = $total / $perPage;
+  $totalPages = ceil( $total / $perPage );
   $showPages = (($currentPage - 1) * $perPage + 1) ."-".($perPage * $currentPage);
 ?>
 <link rel="stylesheet" type="text/css" href="/assets/css/employees.css">
-<div class="container pt-3">
+<div class="container pt-3" data-totalPage="<?php echo $totalPages; ?>">
 <div class="row">
-    <div class="col-md-3">
-      <?php include_once('../sidebar/employee.php'); ?>
-    </div>
-    <div class="col-md-9">
+    <?php include_once('../sidebar/main.php'); ?>
+    <div class="col-9 mb-3 mb-lg-8">
         <div class="overflow-hidden card table-nowrap table-card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="card-title mb-0">Manage Users</h5>
@@ -98,53 +95,46 @@
                       </td>
                       <td class="text-center">
                         <div class="dropdown">
-                          <a data-bs-toggle="dropdown" href="#" class="btn p-1" aria-expanded="true"><i class="bi bi-list"></i></a>
+                          <a data-bs-toggle="dropdown" href="#" class="btn" aria-expanded="true"><i class="bi bi-list"></i></a>
                           <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item"><i class="bi bi-eye"></i> Update Password</a>
+                            <a href="#" class="dropdown-item"><i class="bi bi-key-fill"></i> Update Password</a>
                             <a href="?id=17149" class="dropdown-item"><i class="bi bi-printer"></i> Edit Details</a>
                             <hr>
-                            <a data-id="17149" type="button" href="#!" class="deleteTransaction dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#transactionDeleteModal"><i class="bi bi-trash"></i> Delete User</a>
-                                                                        </div>
-                              </div>
+                            <a type="button" href="#!" class="deleteUser dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#userRemoveModal"><i class="bi bi-eye-slash-fill"></i> Remove User</a>
+                            <a type="button" href="#!" class="deleteUser dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#userDeleteModal"><i class="bi bi-trash"></i> Force Delete User</a>
+                          </div>
+                        </div>
                       </td>
                       <?php } } ?>
                     </tr>
                   </tbody>
                 </table>
+                <?php 
+                  $previous = ($currentPage != 1) ? $currentPage - 1 : $currentPage;
+                  $next = ($currentPage != $totalPages) ? $currentPage + 1 : $currentPage;
+                ?>
                 <nav aria-label="Page navigation example" class="text-center">
-                    <ul class="pagination">
-                      <li class="page-item">
-                        <a class="page-link" href="?page=1" aria-label="Previous">
-                          <span aria-hidden="true">«</span>
-                        </a>
-                      </li>
-                      <li class="page-item">
-                        <a class="page-link" href="?page=1" aria-label="Previous">
-                          <span aria-hidden="true">«</span>
-                        </a>
-                      </li>
-                                            <li class="page-item active"><a class="page-link" href="?page=1">1</a></li>
-                                            <li class="page-item "><a class="page-link" href="?page=2">2</a></li>
-                                            <li class="page-item "><a class="page-link" href="?page=3">3</a></li>
-                                            <li class="page-item "><a class="page-link" href="?page=4">4</a></li>
-                                            <li class="page-item "><a class="page-link" href="?page=5">5</a></li>
-                                            <li class="page-item "><a class="page-link" href="?page=6">6</a></li>
-                                            <li class="page-item "><a class="page-link" href="?page=7">7</a></li>
-                                            <li class="page-item "><a class="page-link" href="?page=8">8</a></li>
-                                            <li class="page-item "><a class="page-link" href="?page=9">9</a></li>
-                                            <li class="page-item "><a class="page-link" href="?page=10">10</a></li>
-                                            <li class="page-item "><a class="page-link" href="?page=11">11</a></li>
-                                            <li class="page-item "><a class="page-link" href="?page=12">12</a></li>
-                                            <li class="page-item "><a class="page-link" href="?page=13">13</a></li>
-                                            <li class="page-item "><a class="page-link" href="?page=14">14</a></li>
-                                              
-                      <li class="page-item">
-                        <a class="page-link" href="?page=2" aria-label="Next">
-                          <span aria-hidden="true">»</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </nav>
+                  <ul class="pagination">
+                    <li class="page-item">
+                      <a class="page-link" href="?page=<?php echo $previous; ?>" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="?page=<?php echo $previous; ?>" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <?php for ($page=1; $page <= $totalPages; $page++) { ?>
+                    <li class="page-item <?php echo $currentPage == $page ? 'active' : ''; ?>"><a class="page-link" href="?page=<?php echo  $page; ?>"><?php echo  $page; ?></a></li>
+                    <?php } ?>                        
+                    <li class="page-item">
+                      <a class="page-link" href="?page=<?php echo $next; ?>" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
             </div>
         </div>
     </div>

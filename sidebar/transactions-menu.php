@@ -26,11 +26,11 @@
     <div class="modal-body">
         <div class="form-group">
           <span class="input-icon inverted">
-            <input type="text" class="form-control fs-4" id="addTransactionsId" placeholder="Search Transaction ID">
+            <input type="text" class="form-control fs-4" id="asssssaddTransactionsId" placeholder="Search Transaction ID">
             <i class="bi bi-qr-code-scan  fs-4"></i>
           </span>
         </div>
-        <div id="itemListRegistered" class="mt-2"></div>
+        <div id="asditemListRegistered" class="mt-2"></div>
     </div>
     <div class="modal-footer hstack gap-3">
         <button type="button" class="btn " data-bs-dismiss="offcanvas" aria-label="Close">Close</button>

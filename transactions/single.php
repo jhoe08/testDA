@@ -3,6 +3,7 @@
 
 <div class="container bootdey pt-3">
 	<!-- <?php include_once('../breadcrumb.php'); ?> -->
+	<div class="pb-3"><a class="goback text-decoration-none text-secondary" href="/transactions"><i class="bi bi-arrow-left-square"></i> Go Back</a></div>
 	<div class="content">
 		<?php 
 			if($datas === NULL) {
@@ -25,10 +26,10 @@
 	              	<i class="bi bi-gear-fill"></i>
 	        			</button>
 	              <div class="dropdown-menu dropdown-menu-end" style="">
-	                <a href="#" class="dropdown-item updateBtn" type="button"><i class="bi bi-pencil-square"></i> Update Transaction</a>
-	                <a href="#" class="dropdown-item printBtn" type="button"><i class="bi bi-printer"></i> Print Transaction</a>
-	                <hr>
-	                <a id="delete-<?php echo $id[1]; ?>" href="#" class="dropdown-item text-danger deleteTransactionBtn" data-id="<?php echo $id[1]; ?>">	<i class="bi bi-trash"></i> Delete Transaction</a>
+	                <a href="/transactions/create/?id=<?php echo $id[1]; ?>" class="dropdown-item updateBtn" type="button"><i class="bi bi-pencil-square"></i> Update Transaction</a>
+	                <a href="/transactions/print?id=<?php echo $id[1]; ?>" class="dropdown-item printBtn" type="button"><i class="bi bi-printer"></i> Print Transaction</a>
+	                <!-- <hr>
+	                <a id="delete-<?php echo $id[1]; ?>" href="#" class="dropdown-item text-danger deleteTransactionBtn" data-id="<?php echo $id[1]; ?>">	<i class="bi bi-trash"></i> Delete Transaction</a> -->
 	              </div>
 	            </div>
 
@@ -170,8 +171,7 @@
     </div>
   </div>
 </div>
-
-
+</div>
 
 <script type="text/javascript">
 	let { origin } = window.location;

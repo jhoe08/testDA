@@ -13,7 +13,7 @@
             <label for="message-text" class="col-form-label">Items:</label>
             <div class="form-group">
                 <span class="input-icon inverted">
-                    <input type="text" class="form-control fs-4" id="addTransactionsId">
+                    <input type="number" class="form-control fs-4" id="addTransactionsId">
                     <i class="bi bi-qr-code-scan  fs-4"></i>
                 </span>
             </div>
@@ -27,7 +27,7 @@
             <div class="form-group">
                 <textarea type="text" class="form-control fs-4" id="addTransactionsRemarks"></textarea>
             </div>
-            <div class="form-check">
+            <div class="form-check hidden">
               <input class="form-check-input" type="checkbox" value="" id="automateRemarks" name="automateRemarks">
               <label class="form-check-label" for="automateRemarks">
                 Automate Remarks
